@@ -3,7 +3,7 @@
 export default function RootLayout({ children }) {
   return (
     <html>
-      <head>Next.js 13</head>
+      <head></head>
       <body>
         <nav>WOw!</nav>
         {children}
