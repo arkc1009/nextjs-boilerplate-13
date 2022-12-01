@@ -1,4 +1,4 @@
-import Link from "next/link";
+import PostHeader from "./Header";
 
 export default function PostLayout({
   children,
@@ -6,25 +6,15 @@ export default function PostLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
-      <body>
-        <header>
-          <nav>
-            <ul>
-              <li>
-                <Link href="/post/ssr">SSR</Link>
-              </li>
-              <li>
-                <Link href="/post/ssg">SSG</Link>
-              </li>
-              <li>
-                <Link href="/post/isr">ISR</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <main>{children}</main>
-      </body>
-    </html>
+    // <html>
+    //   <body>
+    //     {/* <PostHeader /> */}
+    //     <main>{children}</main>
+    //   </body>
+    // </html>
+    <div>
+      {/* <PostHeader /> */}
+      <main>{children}</main>
+    </div>
   );
 }

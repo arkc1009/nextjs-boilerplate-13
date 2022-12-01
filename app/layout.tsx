@@ -1,4 +1,7 @@
-import Link from "next/link";
+/* eslint-disable @next/next/no-head-element */
+import "../styles/globals.css";
+
+import RootHeader from "./Header";
 
 export default function RootLayout({
   children,
@@ -7,20 +10,11 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>
-        <header>
-          <nav>
-            <ul>
-              <li>
-                <Link href="/post">Post</Link>
-              </li>
-              <li>
-                <Link href="/login">Login</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <main>{children}</main>
+      <head></head>
+
+      <body className="w-screen h-screen flex flex-col items-center bg-[#F8F9FA]">
+        <RootHeader />
+        <main className="w-full h-full shadow-inner px-24">{children}</main>
       </body>
     </html>
   );

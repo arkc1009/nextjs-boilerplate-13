@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  back:
+    image: arkc1009/temp_express
+    restart: always
+    ports:
+      - "8080:3001"
+  front:
+    image: arkc1009/temp_next
+    ports:
+      - "80:3000"
+

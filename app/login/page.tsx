@@ -1,3 +1,10 @@
+import LoginForm from "./LoginForm.client";
+
 export default function Login() {
-  return <div>Login</div>;
+  return (
+    <div>
+      asdasds
+      <LoginForm />
+    </div>
+  );
 }
