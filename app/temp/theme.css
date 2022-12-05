@@ -45,33 +45,39 @@
 }
 
 .markdown-body h1 {
-  font-size: calc(2rem + 2.5vw);
+  font-size: 2.5rem;
   margin: 2rem 0.75rem 1.25rem 0.75rem;
+  font-weight: 700;
 }
 
 .markdown-body h2 {
-  font-size: calc(1.4rem + 1.4vw);
+  font-size: 2rem;
   margin: 1.5rem 0.75rem 1rem 0.75rem;
+  font-weight: 700;
 }
 
 .markdown-body h3 {
-  font-size: calc(1.2rem + 1vw);
+  font-size: 1.5rem;
   margin: 1.25rem 0.75rem 0.75rem 0.75rem;
+  font-weight: 700;
 }
 
 .markdown-body h4 {
-  font-size: calc(1.1rem + 0.6vw);
+  font-size: 1.3125rem;
   margin: 1rem 0.75rem 0.5rem 0.75rem;
+  font-weight: 700;
 }
 
 .markdown-body h5 {
   font-size: calc(1rem + 0.2vw);
   margin: 0.75rem 0.75rem 0.25rem 0.75rem;
+  font-weight: 700;
 }
 
 .markdown-body h6 {
   font-size: calc(1rem);
   margin: 0.25rem 0 0 0 0;
+  font-weight: 700;
 }
 
 .markdown-body p {

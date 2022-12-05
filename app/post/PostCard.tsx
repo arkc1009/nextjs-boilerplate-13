@@ -1,12 +1,20 @@
 import Image from "next/image";
+import Link from "next/link";
+import { use } from "react";
+import getData from "../../lib/getData";
 import TempImg from "../../public/assets/images/393-2300x1200.jpg";
+import PostInfo from "./PostInfo.client";
 
 interface PostCardProps {
   title: string;
   id: number;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ title, id }) => {
+export default function PostCard({ title, id }: PostCardProps) {
+  const data = use(getData().SSR(`/posts/${id}`));
+
+  console.log(`[${id}]: `, data);
+
   return (
     <div className="flex flex-col rounded-lg bg-white shadow-md w-full md:w-1/2 lg:w-[20rem]">
       <div className="img w-full bg-red-100 aspect-[23_/_12]">
@@ -28,10 +36,10 @@ const PostCard: React.FC<PostCardProps> = ({ title, id }) => {
 
           <p>2022년 11월 23일</p>
         </div>
-        <div>footer</div>
+        <div>
+          <Link href={`/post/${id}`}>Click Me!</Link>
+        </div>
       </div>
     </div>
   );
-};
-
-export default PostCard;
+}

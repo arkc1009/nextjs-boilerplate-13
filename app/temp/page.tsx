@@ -1,11 +1,8 @@
 "use client";
 
-// import "./theme.css";
-// import "github-markdown-css";
-// import "beautiful-markdown";
 import "./theme.css";
 import CodeMirror from "@uiw/react-codemirror";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   markdown as LangMarkdown,
   markdownLanguage,
@@ -16,6 +13,11 @@ import { tags as t } from "@lezer/highlight";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import StringHTML from "rehype-stringify";
+import { postData } from "../../lib/getData";
 
 const myTheme = createTheme({
   theme: "light",
@@ -77,33 +79,59 @@ const myTheme = createTheme({
 export default function TempPage() {
   const [code, setCode] = useState("");
   const [html, setHtml] = useState("");
+  const [title, setTitle] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const onChange = React.useCallback((value, viewUpdate) => {
+  const onChange = React.useCallback((value: string) => {
     setCode(value);
+
+    const _html = unified()
+      .use(remarkParse)
+      .use(remarkRehype)
+      .use(StringHTML)
+      .processSync(value)
+      .toString();
+    setHtml(_html);
   }, []);
 
-  useEffect(() => {
-    // const _html = unified()
-    //   .use(markdown)
-    //   .use(remarkRehype)
-    //   .use(stringHTML)
-    //   .processSync(code)
-    //   .toString();
-    // containerRef.current.innerHTML = _html;
-  }, [code]);
+  const handleTitleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setTitle(e.target.value);
+    },
+    []
+  );
+
+  const handleSubmit = useCallback(() => {
+    console.log("submit", title, html);
+    postData("/posts", { title, content: html })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, [html, title]);
 
   return (
     <div className="grid grid-cols-[1fr_1fr] [&_.cm-gutters]:hidden">
-      <CodeMirror
-        value={code}
-        // theme={atomone}
-        extensions={[
-          LangMarkdown({ base: markdownLanguage, codeLanguages: languages }),
-        ]}
-        onChange={onChange}
-        theme={myTheme}
-      />
+      <div className="h-[calc(100vh - 56px)]">
+        <CodeMirror
+          value={code}
+          extensions={[
+            LangMarkdown({ base: markdownLanguage, codeLanguages: languages }),
+          ]}
+          onChange={onChange}
+          theme={myTheme}
+          height="calc(100vh - 56px - 2rem)"
+        />
+        <div className="h-8 bg-slate-400">
+          <input
+            type="text"
+            placeholder="title"
+            value={title}
+            onChange={handleTitleChange}
+          />
+          <button className="ring-0" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
+      </div>
       <div ref={containerRef}>
         <ReactMarkdown
           className="h-[calc(100vh - 56px)] markdown-body"

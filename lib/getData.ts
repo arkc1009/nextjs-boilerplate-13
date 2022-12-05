@@ -25,6 +25,8 @@ export async function postData<T>(URL: string, data: T) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjcwMjM0MzIwLCJleHAiOjE2NzAyMzc5MjB9.3i4zOE8150gYwIleeglRsQ7OpvaXRh_dwm1cn0FO48w",
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: JSON.stringify(data),
