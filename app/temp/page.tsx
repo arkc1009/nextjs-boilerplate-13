@@ -1,8 +1,7 @@
 "use client";
 
-import "./theme.css";
 import CodeMirror from "@uiw/react-codemirror";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   markdown as LangMarkdown,
   markdownLanguage,
@@ -10,14 +9,8 @@ import {
 import { languages } from "@codemirror/language-data";
 import createTheme from "@uiw/codemirror-themes";
 import { tags as t } from "@lezer/highlight";
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import StringHTML from "rehype-stringify";
 import { postData } from "../../lib/getData";
+import MarkdownViewer from "../../ui/MarkdownViewer";
 
 const myTheme = createTheme({
   theme: "light",
@@ -80,18 +73,17 @@ export default function TempPage() {
   const [code, setCode] = useState("");
   const [html, setHtml] = useState("");
   const [title, setTitle] = useState("");
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const onChange = React.useCallback((value: string) => {
     setCode(value);
 
-    const _html = unified()
-      .use(remarkParse)
-      .use(remarkRehype)
-      .use(StringHTML)
-      .processSync(value)
-      .toString();
-    setHtml(_html);
+    // const _html = unified()
+    //   .use(remarkParse)
+    //   .use(remarkRehype)
+    //   .use(StringHTML)
+    //   .processSync(value)
+    //   .toString();
+    // setHtml(_html);
   }, []);
 
   const handleTitleChange = useCallback(
@@ -102,11 +94,10 @@ export default function TempPage() {
   );
 
   const handleSubmit = useCallback(() => {
-    console.log("submit", title, html);
-    postData("/posts", { title, content: html })
+    postData("/posts", { title, content: code })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-  }, [html, title]);
+  }, [title, code]);
 
   return (
     <div className="grid grid-cols-[1fr_1fr] [&_.cm-gutters]:hidden">
@@ -132,31 +123,8 @@ export default function TempPage() {
           </button>
         </div>
       </div>
-      <div ref={containerRef}>
-        <ReactMarkdown
-          className="h-[calc(100vh - 56px)] markdown-body"
-          components={{
-            code({ inline, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || "");
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  style={oneLight as any}
-                  language={match[1]}
-                  PreTag="div"
-                  {...props}
-                >
-                  {String(children).replace(/\n$/, "")}
-                </SyntaxHighlighter>
-              ) : (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              );
-            },
-          }}
-        >
-          {code}
-        </ReactMarkdown>
+      <div>
+        <MarkdownViewer code={code} className="h-[calc(100vh - 56px)]" />
       </div>
     </div>
   );

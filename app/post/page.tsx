@@ -1,6 +1,5 @@
 import getData from "../../lib/getData";
 import PostCard from "./PostCard";
-import PostItem from "./PostItem";
 
 export default async function PostPage() {
   const data = await getData().SSR("/posts");

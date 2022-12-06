@@ -3,14 +3,20 @@ import Link from "next/link";
 import { use } from "react";
 import getData from "../../lib/getData";
 import TempImg from "../../public/assets/images/393-2300x1200.jpg";
-import PostInfo from "./PostInfo.client";
 
 interface PostCardProps {
   title: string;
   id: number;
+  postUrl?: string;
+  userId?: string;
 }
 
-export default function PostCard({ title, id }: PostCardProps) {
+export default function PostCard({
+  title,
+  id,
+  postUrl,
+  userId,
+}: PostCardProps) {
   const data = use(getData().SSR(`/posts/${id}`));
 
   console.log(`[${id}]: `, data);
@@ -37,7 +43,7 @@ export default function PostCard({ title, id }: PostCardProps) {
           <p>2022년 11월 23일</p>
         </div>
         <div>
-          <Link href={`/post/${id}`}>Click Me!</Link>
+          <Link href={`/${userId}/${id}`}>Click Me!</Link>
         </div>
       </div>
     </div>

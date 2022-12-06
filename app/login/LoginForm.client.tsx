@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ChangeEvent,
-  SyntheticEvent,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import { ChangeEvent, SyntheticEvent, useCallback, useState } from "react";
 import { postData } from "../../lib/getData";
 
 interface InputDTO {
@@ -43,9 +37,9 @@ const LoginForm: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-96 my-0 mx-auto border flex flex-col gap-4 items-center py-8"
+      className="flex flex-col items-center gap-4 py-8 mx-auto my-0 border w-96"
     >
-      <fieldset className="flex flex-col gap-2 items-center">
+      <fieldset className="flex flex-col items-center gap-2">
         <label htmlFor="email">email</label>
         <input
           type="text"
@@ -56,7 +50,7 @@ const LoginForm: React.FC = () => {
         />
       </fieldset>
 
-      <fieldset className="flex flex-col gap-2 items-center">
+      <fieldset className="flex flex-col items-center gap-2">
         <label htmlFor="password">password</label>
         <input
           type="text"
