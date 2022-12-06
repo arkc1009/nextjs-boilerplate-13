@@ -1,7 +1,6 @@
 "use client";
 
-import CodeMirror from "@uiw/react-codemirror";
-import React, { useCallback, useState } from "react";
+import CodeMirror, { ReactCodeMirrorProps } from "@uiw/react-codemirror";
 import {
   markdown as LangMarkdown,
   markdownLanguage,
@@ -9,8 +8,6 @@ import {
 import { languages } from "@codemirror/language-data";
 import createTheme from "@uiw/codemirror-themes";
 import { tags as t } from "@lezer/highlight";
-import { postData } from "../../lib/getData";
-import MarkdownViewer from "../../ui/MarkdownViewer";
 
 const myTheme = createTheme({
   theme: "light",
@@ -69,63 +66,16 @@ const myTheme = createTheme({
   ],
 });
 
-export default function TempPage() {
-  const [code, setCode] = useState("");
-  const [html, setHtml] = useState("");
-  const [title, setTitle] = useState("");
-
-  const onChange = React.useCallback((value: string) => {
-    setCode(value);
-
-    // const _html = unified()
-    //   .use(remarkParse)
-    //   .use(remarkRehype)
-    //   .use(StringHTML)
-    //   .processSync(value)
-    //   .toString();
-    // setHtml(_html);
-  }, []);
-
-  const handleTitleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTitle(e.target.value);
-    },
-    []
-  );
-
-  const handleSubmit = useCallback(() => {
-    postData("/posts", { title, content: code })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }, [title, code]);
-
+const MarkdownEditor: React.FC<ReactCodeMirrorProps> = (props) => {
   return (
-    <div className="grid grid-cols-[1fr_1fr] [&_.cm-gutters]:hidden">
-      <div className="h-[calc(100vh - 56px)]">
-        <CodeMirror
-          value={code}
-          extensions={[
-            LangMarkdown({ base: markdownLanguage, codeLanguages: languages }),
-          ]}
-          onChange={onChange}
-          theme={myTheme}
-          height="calc(100vh - 56px - 2rem)"
-        />
-        <div className="h-8 bg-slate-400">
-          <input
-            type="text"
-            placeholder="title"
-            value={title}
-            onChange={handleTitleChange}
-          />
-          <button className="ring-0" onClick={handleSubmit}>
-            Submit
-          </button>
-        </div>
-      </div>
-      <div>
-        <MarkdownViewer code={code} className="h-[calc(100vh - 56px)]" />
-      </div>
-    </div>
+    <CodeMirror
+      extensions={[
+        LangMarkdown({ base: markdownLanguage, codeLanguages: languages }),
+      ]}
+      theme={myTheme}
+      {...props}
+    />
   );
-}
+};
+
+export default MarkdownEditor;

@@ -11,7 +11,7 @@ export default async function UserPage({ params: { userId } }) {
           key={post.id}
           title={post.title}
           id={post.id}
-          userId={userId}
+          postUrl={post.postUrl}
         />
       ))}
     </div>

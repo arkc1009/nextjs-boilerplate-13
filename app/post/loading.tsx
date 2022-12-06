@@ -1,3 +1,3 @@
-export default function PostLoading() {
-  return <div>post loading...</div>;
+export default function PostPageLoading() {
+  return <div>Page Loading...</div>;
 }

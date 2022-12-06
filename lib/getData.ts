@@ -26,8 +26,25 @@ export async function postData<T>(URL: string, data: T) {
     headers: {
       "Content-Type": "application/json",
       Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjcwMzExNjQ1LCJleHAiOjE2NzAzMTUyNDV9.s36oH3pPaQ80lLkfuYWPYL1Z0zmCVo8Wc_TafuFXfTc",
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjcwMzIwOTA3LCJleHAiOjE2NzAzMjQ1MDd9.LLjszJsURd9RfZmlCQkO_p560TlUT3BcgK5eIEx1e_I",
       // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: JSON.stringify(data),
+  });
+
+  return response.json();
+}
+
+export async function patchData<T>(URL: string, data: T) {
+  console.log(`${process.env.API_URL}${URL}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${URL}`, {
+    method: "patch",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjcwMzE2NTYyLCJleHAiOjE2NzAzMjAxNjJ9.kKmFhB0NWsg4C1HCmRmo9U5cRmxYWNxupuLirfpUhfc",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+      "Access-Control-Allow-Methods": `${process.env.NEXT_PUBLIC_API_URL}`,
     },
     body: JSON.stringify(data),
   });
